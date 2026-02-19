@@ -101,9 +101,6 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                   "Sign in"
                 )}
               </Button>
-              <p className="text-center text-xs text-muted-foreground">
-                Demo: use any email/password
-              </p>
             </form>
           </CardContent>
         </Card>
