@@ -1,0 +1,17 @@
+const express = require('express')
+const router = express.Router({ mergeParams: true })
+const { postTenant,getTenants, getTenantProfile } = require('../../controllers/tenant/tenant.controller')
+const asyncHandler = require('../../utils/asyncHandler')
+const { authenticatedUsersOnly } = require('../../middlewares/authenticateUser.middleware')
+const { resolveTenant } = require('../../middlewares/resolveTenant.middleware')
+const { requireMembership } = require('../../middlewares/requireMembership.middleware')
+const projectsRouter = require('./project.route')
+const memberRouter = require('./members.route')
+const tasksRouter = require('./task.route')
+router.post('/',asyncHandler(authenticatedUsersOnly),asyncHandler(postTenant))
+router.get('/',asyncHandler(authenticatedUsersOnly),asyncHandler(getTenants))
+router.get('/:tenantId',asyncHandler(authenticatedUsersOnly),asyncHandler(resolveTenant),asyncHandler(requireMembership),asyncHandler(getTenantProfile))
+router.use('/:tenantId/projects',projectsRouter)
+router.use('/:tenantId/members',memberRouter)
+
+module.exports = router
